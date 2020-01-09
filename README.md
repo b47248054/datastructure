@@ -51,7 +51,7 @@
 
 ### 算法具备的特性有哪些？
 
-- 0..*个输入，1..*个输出
+- 0..* 个输入，1.. *个输出
 
 - 有穷性，算法一定会执行结束。
 
@@ -102,7 +102,31 @@ c) for (int i=1; i<=n; i++) { for (int j=1; i<=n; j++) { ++x; s+=x; } }
 
 ### 空间复杂度，忽略吧，这个不是重点。
 
+### 总结
 ![IMG_6219](https://raw.githubusercontent.com/b47248054/datastructure/master/media/datastructure.png)
+
+## 线性结构
+
+### 线性表
+
+#### 总结
+![IMG_6219](https://raw.githubusercontent.com/b47248054/datastructure/master/media/list.png)
+### 栈与队列
+
+### 串
+
+## 非线性结构
+
+### 树
+
+### 图
+
+## 算法
+
+### 查找
+
+### 排序
 
 
 *XMind: ZEN - Trial Version*
+
