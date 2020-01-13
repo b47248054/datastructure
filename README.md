@@ -109,6 +109,182 @@ c) for (int i=1; i<=n; i++) { for (int j=1; i<=n; j++) { ++x; s+=x; } }
 
 ### 线性表
 
+#### 什么是线性表？
+- 线性表是大于等于0个数据元素的有限序列，元素之间是1对1关系，全称为线性存储结构。线性表存在两个特征，有序性和有限性，除第一个元素外，每个元素都存在前驱元素，除最后一个元素外，每一个元素都存在后续元素；线性表的元素数量是有限的。
+
+#### 线性表的物理结构
+- 线性表按存储方式划分为两种物理结构，顺序存储结构和链式存储结构。将数据元素依次存储在连续的物理空间中，这样的存储方式被称为顺序存储结构（简称顺序表）。将数据元素分散的存储在任意的物理空间中，数据元素间通过相互链接，来存储期间的逻辑关系，这种存储方式被称为链式存储结构（简称链式表）。
+
+#### 顺序表
+- 顺序表的数据结构
+    - 简单的来讲，顺序表就是一维数组，数据元素之间的有序性，通过其在数组中的位置来确定。其长度和容量在创建时按数据类型动态计算并分配连续的物理空间。
+    - 其特性还体现在读取数据时的性能为O(1)，在更新数据时性能为O(n)
+    
+- 顺序表的实现（java）    
+
+```
+package linear;
+
+/**
+ * 实现顺序表
+ * @date 2020/1/13
+ */
+public class ArrayList {
+
+    /**
+     * 存储数据的最大数量
+     */
+    private int maxSize;
+
+    /**
+     * 当前数组元素数量
+     */
+    private int currentSize;
+
+    /**
+     * 存储的数据元素
+     */
+    private String[] data;
+
+    /**
+     * 初始化顺序表
+     * @param maxSize 初始化最大元素数量
+     */
+    public ArrayList(int maxSize) {
+        this.currentSize = 0;
+        this.maxSize = maxSize;
+        this.data = new String[maxSize];
+    }
+
+    /**
+     * 读取顺序表中的数据元素
+     * @param i
+     * @return
+     */
+    public String get(int i) {
+        if (i < 0 || i > this.currentSize) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        return this.data[i];
+    }
+
+    /**
+     * 在顺序表中第i个数据前，插入数据data，表长度加1
+     * @param data
+     * @param i
+     */
+    public void insertData(String data, int i) {
+
+        // 输入校验
+        if (i < 0 || i > this.currentSize + 1) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        // 判断表空间大小
+        if (this.currentSize == this.maxSize) {
+            // 表空间不足
+            // 如何扩容？
+            throw new RuntimeException("this array if full.");
+        }
+
+        // 插入数据不在表尾
+        if (i < this.currentSize) {
+            // 将要插入位置后的数据向后移动一位，倒序更优雅
+            for (int j = this.currentSize; j >= i; j--) {
+                this.data[j + 1] = this.data[j];
+            }
+        }
+
+        // 执行插入i
+        this.data[i] = data;
+        this.currentSize++;
+    }
+
+    /**
+     * 删除第i个数据，返回被删除数据，表长减1
+     * @param i
+     * @return
+     */
+    public String deleteData(int i) {
+        String data;
+
+        // 输入校验
+        if (i < 0 || i > this.currentSize + 1) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        // 判断表空间大小
+        if (this.currentSize == 0) {
+            // 空表
+            throw new RuntimeException("this array if empty.");
+        }
+
+        // 获得被删除数据
+        data = this.data[i];
+
+        // 被删除数据不在表尾
+        if (i < this.currentSize) {
+            for (int j = i; j <= this.currentSize; j++) {
+                this.data[j] = this.data[j + 1];
+            }
+        }
+        this.currentSize--;
+        return data;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < this.currentSize; i++) {
+            sb.append(this.data[i]);
+            if (i < this.currentSize - 1) {
+                sb.append(',');
+            }
+        }
+        return sb.toString();
+    }
+}
+
+```
+
+
+#### 链式表
+- 链式表的基本结构
+- 单向链表的结构
+    - 实现单向链表（java）
+        - 创建
+        - 读取
+        - 更新
+        - 删除
+    - 实现单向循环链表（java）
+        - 创建
+        - 读取
+        - 更新
+        - 删除
+- 双向链表的结构
+    - 实现双向链表（java）
+        - 创建
+        - 读取
+        - 更新
+        - 删除
+    - 实现双向循环链表
+        - 创建
+        - 读取
+        - 更新
+        - 删除
+        
+#### 顺序表和链表的优缺点
+- 物理结构
+- 时间性能
+- 空间性能
+- 静态链表的结构
+- 实现静态链表（java）
+    - 创建
+    - 读取
+    - 更新
+    - 删除
+
 #### 总结
 ![IMG_6219](https://raw.githubusercontent.com/b47248054/datastructure/master/media/list.png)
 ### 栈与队列
