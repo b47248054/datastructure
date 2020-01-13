@@ -122,7 +122,7 @@ c) for (int i=1; i<=n; i++) { for (int j=1; i<=n; j++) { ++x; s+=x; } }
     
 - 顺序表的实现（java）    
 
-```
+```java
 package linear;
 
 /**
