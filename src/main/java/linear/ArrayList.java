@@ -4,7 +4,7 @@ package linear;
  * 实现顺序表
  * @date 2020/1/13
  */
-public class ArrayList {
+public class ArrayList<T> {
 
     /**
      * 存储数据的最大数量
@@ -19,7 +19,7 @@ public class ArrayList {
     /**
      * 存储的数据元素
      */
-    private String[] data;
+    private T[] data;
 
     /**
      * 初始化顺序表
@@ -28,7 +28,7 @@ public class ArrayList {
     public ArrayList(int maxSize) {
         this.currentSize = 0;
         this.maxSize = maxSize;
-        this.data = new String[maxSize];
+        this.data = (T[]) new Object[maxSize];
     }
 
     /**
@@ -36,7 +36,7 @@ public class ArrayList {
      * @param i
      * @return
      */
-    public String get(int i) {
+    public T get(int i) {
         if (i < 0 || i > this.currentSize) {
             throw new IndexOutOfBoundsException();
         }
@@ -49,7 +49,7 @@ public class ArrayList {
      * @param data
      * @param i
      */
-    public void insertData(String data, int i) {
+    public void insertData(T data, int i) {
 
         // 输入校验
         if (i < 0 || i > this.currentSize + 1) {
@@ -81,8 +81,8 @@ public class ArrayList {
      * @param i
      * @return
      */
-    public String deleteData(int i) {
-        String data;
+    public T deleteData(int i) {
+        T data;
 
         // 输入校验
         if (i < 0 || i > this.currentSize + 1) {

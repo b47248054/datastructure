@@ -12,7 +12,7 @@ public class TestArrayList {
 
     @Test
     public void testGet() {
-        ArrayList list = new ArrayList(5);
+        ArrayList<String> list = new ArrayList<>(5);
         System.out.println(list.toString());
         list.insertData("0", 0);
         Assert.assertEquals(list.get(0), "0");
