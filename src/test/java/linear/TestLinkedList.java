@@ -2,8 +2,7 @@ package linear;
 
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author liuzhongxu
@@ -160,6 +159,195 @@ public class TestLinkedList {
             head = head.next;
         }
         return pos;
+    }
+
+    /**
+     * 2. 两数相加
+     * 给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+     *
+     * 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
+     *
+     * 您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+     *
+     * 示例：
+     *
+     * 输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
+     * 输出：7 -> 0 -> 8
+     * 原因：342 + 465 = 807
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/add-two-numbers
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode result = new ListNode(0);
+        ListNode head = result;
+        int off = 0;
+        while (l1 != null || l2 != null) {
+            if (l1 != null) {
+                off += l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                off += l2.val;
+                l2 = l2.next;
+            }
+            result.next = new ListNode(off % 10);
+            result = result.next;
+            off = off / 10;
+        }
+        if (off != 0) {
+            result.next = new ListNode(off);
+        }
+        return head.next;
+    }
+
+    /**
+     * 21. 合并两个有序链表
+     * 将两个升序链表合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+     *
+     * 示例：
+     *
+     * 输入：1->2->4, 1->3->4
+     * 输出：1->1->2->3->4->4
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/merge-two-sorted-lists
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * 思路
+     * 标签：链表、递归
+     * 这道题可以使用递归实现，新链表也不需要构造新节点，我们下面列举递归三个要素
+     * 终止条件：两条链表分别名为 l1 和 l2，当 l1 为空或 l2 为空时结束
+     * 返回值：每一层调用都返回排序好的链表头
+     * 本级递归内容：如果 l1 的 val 值更小，则将 l1.next 与排序好的链表头相接，l2 同理
+     * O(m+n)O(m+n)，mm 为 l1的长度，nn 为 l2 的长度
+     *
+     * 作者：guanpengchn
+     * 链接：https://leetcode-cn.com/problems/merge-two-sorted-lists/solution/hua-jie-suan-fa-21-he-bing-liang-ge-you-xu-lian-bi/
+     * 来源：力扣（LeetCode）
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+
+        System.out.print("l1:");printList(l1);
+        System.out.print("l2:");printList(l2);
+        System.out.println("-----------");
+        if (null == l1) {
+            return l2;
+        }
+
+        if (null == l2) {
+            return l1;
+        }
+
+        if (l1.val < l2.val) {
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLists(l1, l2.next);
+            return l2;
+        }
+
+    }
+
+    @Test
+    public void testMergeTwoLists() {
+        ListNode l1 = new ListNode(1);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(2);
+
+        ListNode l2 = new ListNode(1);
+        l2.next = new ListNode(1);
+        l2.next.next = new ListNode(2);
+
+        ListNode l3 = mergeTwoLists(l1, l2);
+        printList(l3);
+
+    }
+
+    /**
+     * 23. 合并K个排序链表
+     * 合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。
+     *
+     * 示例:
+     *
+     * 输入:
+     * [
+     *   1->4->5,
+     *   1->3->4,
+     *   2->6
+     * ]
+     * 输出: 1->1->2->3->4->4->5->6
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/merge-k-sorted-lists
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param lists
+     * @return
+     */
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (null == lists || lists.length == 0) {
+            return null;
+        }
+        if (lists.length == 1) {
+            return lists[0];
+        }
+        ListNode result = new ListNode(0);
+        ListNode head = result;
+
+        int len = lists.length;
+        Queue<ListNode> queue = new PriorityQueue(new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode o1, ListNode o2) {
+                if(o1.val<o2.val)return -1;
+                else if(o1.val==o2.val)return 0;
+                else return 1;
+            }
+        });
+        for (ListNode node : lists) {
+            while (null != node) {
+                queue.add(node);
+                node = node.next;
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            ListNode node = queue.poll();
+            node.next = null;
+            result.next = node;
+            result = result.next;
+        }
+
+        return head.next;
+    }
+
+    @Test
+    public void testMergeKLists() {
+        ListNode l1 = new ListNode(1);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(3);
+        l1.next.next.next = new ListNode(3);
+
+        ListNode l2 = new ListNode(4);
+        l2.next = new ListNode(5);
+        l2.next.next = new ListNode(6);
+
+        ListNode l3 = new ListNode(7);
+        l3.next = new ListNode(8);
+//        l3.next.next = new ListNode(9);
+
+        ListNode[] listNodes = {l1, l2, l3};
+
+        ListNode l4 = mergeKLists(listNodes);
+
+        printList(l4);
     }
 
 
