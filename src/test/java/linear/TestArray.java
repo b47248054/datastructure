@@ -117,4 +117,86 @@ public class TestArray {
             System.out.println(nums[i]);
         }
     }
+
+
+    /**
+     * 560. 和为K的子数组
+     * 给定一个整数数组和一个整数 k，你需要找到该数组中和为 k 的连续的子数组的个数。
+     *
+     * 示例 1 :
+     *
+     * 输入:nums = [1,1,1], k = 2
+     * 输出: 2 , [1,1] 与 [1,1] 为两种不同的情况。
+     * 说明 :
+     *
+     * 数组的长度为 [1, 20,000]。
+     * 数组中元素的范围是 [-1000, 1000] ，且整数 k 的范围是 [-1e7, 1e7]。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/subarray-sum-equals-k
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * 解题思路：
+     *
+     * 建立map表用于存储每个连续子数组sum求和出现的次数，初始化为（0,1），表示和为0的连续子数组出现1次。
+     *
+     * sum的值是在对nums数组的循环中不断累加当前元素的，res的值则需要查找map中是否已存在sum-k的元素，也就是在查找此前所有从0项开始累加的连续子项和中有没有sum-k。
+     *
+     * 如果有的话，则说明从该项到当前项的连续子数组和必定为k，那么res则可以和这个sum的对应值，即这个sum出现的次数，相加得到新的res。
+     *
+     * 对于当前sum如果已存在与map中则其对应值+1，不存在则添加新项，初始值为1。
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int subarraySum(int[] nums, int k) {
+        int sum = 0;
+        int r = 0;
+        Map<Integer, Integer> res = new HashMap<>();
+        res.put(0, 1);// 数组本身就是子集
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (res.containsKey(sum - k)) {
+                r += res.get(sum - k);// 子集出现次数
+            }
+            res.put(sum, res.getOrDefault(sum, 0) + 1);
+        }
+        return r;
+    }
+
+    /**
+     * 1. 两数之和
+     * 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+     *
+     * 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
+     *
+     *  
+     *
+     * 示例:
+     *
+     * 给定 nums = [2, 7, 11, 15], target = 9
+     *
+     * 因为 nums[0] + nums[1] = 2 + 7 = 9
+     * 所以返回 [0, 1]
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/two-sum
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> res = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int c = target - nums[i];
+            if (res.containsKey(c)) {
+                return new int[]{res.get(c), i};
+            }
+            res.put(nums[i], i);
+        }
+        return new int[]{};
+    }
 }
