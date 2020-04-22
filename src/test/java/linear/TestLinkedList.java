@@ -350,5 +350,97 @@ public class TestLinkedList {
         printList(l4);
     }
 
+    /**
+     * 148. 排序链表
+     * 在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。
+     *
+     * 示例 1:
+     *
+     * 输入: 4->2->1->3
+     * 输出: 1->2->3->4
+     * 示例 2:
+     *
+     * 输入: -1->5->3->4->0
+     * 输出: -1->0->3->4->5
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/sort-list
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * 通过递归实现链表归并排序，有以下两个环节：
+     *
+     * 分割 cut 环节： 找到当前链表中点，并从中点将链表断开（以便在下次递归 cut 时，链表片段拥有正确边界）；
+     * 我们使用 fast,slow 快慢双指针法，奇数个节点找到中点，偶数个节点找到中心左边的节点。
+     * 找到中点 slow 后，执行 slow.next = None 将链表切断。
+     * 递归分割时，输入当前链表左端点 head 和中心节点 slow 的下一个节点 tmp(因为链表是从 slow 切断的)。
+     * cut 递归终止条件： 当head.next == None时，说明只有一个节点了，直接返回此节点。
+     * 合并 merge 环节： 将两个排序链表合并，转化为一个排序链表。
+     * 双指针法合并，建立辅助ListNode h 作为头部。
+     * 设置两指针 left, right 分别指向两链表头部，比较两指针处节点值大小，由小到大加入合并链表头部，指针交替前进，直至添加完两个链表。
+     * 返回辅助ListNode h 作为头部的下个节点 h.next。
+     * 时间复杂度 O(l + r)，l, r 分别代表两个链表长度。
+     * 当题目输入的 head == None 时，直接返回None。
+     *
+     * 作者：jyd
+     * 链接：https://leetcode-cn.com/problems/sort-list/solution/sort-list-gui-bing-pai-xu-lian-biao-by-jyd/
+     * 来源：力扣（LeetCode）
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
+     * @param head
+     * @return
+     */
+    public ListNode sortList(ListNode head) {
+        if (null == head || head.next == null) { // 当题目输入的 head == None 时，直接返回None。
+            return head;
+        }
+        // fast,slow 快慢双指针法，奇数个节点找到中点，偶数个节点找到中心左边的节点。
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        ListNode temp = slow.next;
+        slow.next = null;// 找到中点 slow 后，执行 slow.next = None 将链表切断。
+
+        // 递归分割时，输入当前链表左端点 head 和中心节点 slow 的下一个节点 tmp(因为链表是从 slow 切断的)。
+        ListNode left = sortList(head);
+        ListNode right = sortList(temp);
+
+        System.out.print("left:");printList(left);
+        System.out.print("right:");printList(right);
+
+        ListNode result = new ListNode(0);// 双指针法合并，建立辅助ListNode h 作为头部。
+        ListNode h = result;
+
+        while (left != null && right != null) {// 设置两指针 left, right 分别指向两链表头部，比较两指针处节点值大小，由小到大加入合并链表头部，指针交替前进，直至添加完两个链表。
+            if (left.val < right.val) {
+                result.next = left;
+                left = left.next;
+            }else {
+                result.next = right;
+                right = right.next;
+            }
+            result = result.next;
+        }
+
+        result.next = left != null ? left : right; // 返回辅助ListNode h 作为头部的下个节点 h.next。
+
+        return h.next;
+    }
+
+    @Test
+    public void testSortList() {
+        ListNode l1 = new ListNode(4);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(1);
+        l1.next.next.next = new ListNode(3);
+
+        ListNode l2 = sortList(l1);
+
+        printList(l2);
+    }
+
 
 }
