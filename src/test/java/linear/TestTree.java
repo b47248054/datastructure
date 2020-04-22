@@ -53,19 +53,19 @@ public class TestTree {
         if (null == root) {
             return results;
         }
-        results.add(root.val);
-        List<Integer> right = rightSideView(root.right);
-        List<Integer> left = rightSideView(root.left);
-
-        results.addAll(right);
-
-        if (left.size() > right.size()) {
-            for (int i = right.size(); i < left.size() ; i++) {
-                results.add(left.get(i));
-            }
-        }
-
+        dfsTree(results, root, 0);
         return results;
+    }
+
+    private void dfsTree(List<Integer> results, TreeNode root, int level) {
+        if (null == root) {
+            return;
+        }
+        if (results.size() == level) {
+            results.add(root.val);
+        }
+        dfsTree(results, root.right, level + 1);
+        dfsTree(results, root.left, level + 1);
     }
 
     @Test
