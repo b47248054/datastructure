@@ -65,7 +65,7 @@ public class TestString {
 
     @Test
     public void testLen() {
-        String s = "aa";
+        String s = "aasdfasdfsdaf";
         int len = lengthOfLongestSubstring(s);
         System.out.println(len);
     }
