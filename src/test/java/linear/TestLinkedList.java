@@ -442,5 +442,46 @@ public class TestLinkedList {
         printList(l2);
     }
 
+    /**
+     * 160. 相交链表
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+
+        if (null == headA || null == headB) {
+            return null;
+        }
+
+        ListNode pA = headA;
+        ListNode pB = headB;
+
+        ListNode node = null;
+
+        while (true) {
+            if (pA.equals(pB)) {
+                node = pA;
+                break;
+            }
+
+            pA = pA.next;
+            pB = pB.next;
+
+            if (pA == null && pB == null) {
+                break;
+            }
+
+            if (pA == null) {
+                pA = headB;
+            }
+            if (pB == null) {
+                pB = headA;
+            }
+        }
+
+        return node;
+    }
+
 
 }
