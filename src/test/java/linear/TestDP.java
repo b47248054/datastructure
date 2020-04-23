@@ -55,7 +55,7 @@ public class TestDP {
 
     @Test
     public void testUniquePaths() {
-        int ans = uniquePaths(99, 99);// c76*c21*c21
+        int ans = uniquePaths(7, 3);// c76*c21*c21
         System.out.println(ans);
     }
 }
