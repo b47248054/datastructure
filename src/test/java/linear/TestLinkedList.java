@@ -453,9 +453,30 @@ public class TestLinkedList {
         if (null == headA || null == headB) {
             return null;
         }
-
         ListNode pA = headA;
         ListNode pB = headB;
+
+        int lenA = 0, lenB = 0;
+        while (pA != null) {
+            lenA++;
+            pA = pA.next;
+        }
+
+        while (pB != null) {
+            lenB++;
+            pB = pB.next;
+        }
+
+        int lengthDiff = lenA - lenB;
+        pA = headA;
+        pB = headB;
+        //抹平长链表的头部
+        while(lengthDiff > 0 && lengthDiff-- > 0) {
+            pA = pA.next;
+        }
+        while(lengthDiff < 0 && lengthDiff++ < 0) {
+            pB = pB.next;
+        }
 
         ListNode node = null;
 
