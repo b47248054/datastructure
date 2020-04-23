@@ -90,7 +90,7 @@ public class TestDP {
 
         int dp[][] = new int[m][n];
 
-        // dp[i][j] = min(dp[i][j-1],dp[i-1][j])+grid[i],[j]
+        //   dp[i][j] = min(dp[i][j-1],dp[i-1][j])+grid[i],[j]
         dp[0][0] = grid[0][0];
         for (int i = 1; i < m; i++) dp[i][0] = dp[i - 1][0] + grid[i][0];
         for (int i = 1; i < n; i++) dp[0][i] = dp[0][i - 1] + grid[0][i];
