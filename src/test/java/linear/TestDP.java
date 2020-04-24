@@ -161,10 +161,4 @@ public class TestDP {
         int w = waysToChange(n);
         System.out.println(w);
     }
-
-    public int minDistance(String word1, String word2) {
-        int m = word1.length();
-        int n = word2.length();
-        int dp[][] = new int[m][n];
-    }
 }
